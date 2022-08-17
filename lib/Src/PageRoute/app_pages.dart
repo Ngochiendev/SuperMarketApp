@@ -20,7 +20,7 @@ abstract class AppPage {
     ),
     GetPage(
       name: PageRoutes.AllPageRoute,
-      page: () => AllScreen(),
+      page: () => const AllScreen(),
     ),
   ];
 }
@@ -29,6 +29,6 @@ abstract class PageRoutes {
   static const String splashRoute = '/splash';
   static const String SigninRoute = '/signin';
   static const String SignupRoute = '/signup';
-  //this is all page ...
+  //this is all page ... hehe
   static const String AllPageRoute = '/';
 }
