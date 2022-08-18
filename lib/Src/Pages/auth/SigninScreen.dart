@@ -8,6 +8,8 @@ import 'package:sale_app/Src/Pages/Values/custom_text.dart';
 import 'package:sale_app/Src/Pages/auth/Components/custom_text_field.dart';
 import 'package:get/get.dart';
 
+import 'controller/auth_controller.dart';
+
 class SignInScreen extends StatefulWidget {
   SignInScreen({Key? key}) : super(key: key);
   final _formKey = GlobalKey<FormState>();
@@ -114,31 +116,44 @@ class _SignInScreenState extends State<SignInScreen> {
                         SizedBox(
                           height: 50,
                           width: 320,
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                            ),
-                            onPressed: () {
-                              // Navigator.pushReplacement(
-                              //   context,
-                              //   MaterialPageRoute(builder: (_) => AllScreen()),
-                              // );
-                              if (widget._formKey.currentState!.validate()) {
-                                String email = emailController.text;
-                                String password = passwordController.text;
-                                print('email: $email - password: $password');
-                              } else {
-                                print('Sai email');
-                              }
-                              // Get.offNamed(PageRoutes.AllPageRoute);
-                              print('Login');
+                          child: GetX<AuthController>(
+                            init: AuthController(),
+                            builder: (authcontroller) {
+                              return ElevatedButton(
+                                style: ElevatedButton.styleFrom(
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                ),
+                                onPressed: authcontroller.isLoading.value
+                                    ? null
+                                    : () {
+                                        FocusScope.of(context)
+                                            .unfocus(); //khi ấn nút, sẽ ẩn bàn phím xuống
+                                        if (widget._formKey.currentState!
+                                            .validate()) {
+                                          String email = emailController.text;
+                                          String password =
+                                              passwordController.text;
+
+                                          authcontroller.SignIn(
+                                              email: email, password: password);
+                                          print(
+                                              'email:  $email- password: $password');
+                                        } else {
+                                          print('Sai email');
+                                        }
+                                        // Get.offNamed(PageRoutes.AllPageRoute);
+                                        print('Login');
+                                      },
+                                child: authcontroller.isLoading.value
+                                    ? CircularProgressIndicator()
+                                    : Text(
+                                        'LOGIN',
+                                        style: AppStyles.h1,
+                                      ),
+                              );
                             },
-                            child: Text(
-                              'LOGIN',
-                              style: AppStyles.h1,
-                            ),
                           ),
                         ),
                         //Button forget
