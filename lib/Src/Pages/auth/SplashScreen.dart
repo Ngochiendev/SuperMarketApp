@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:sale_app/Src/Pages/Screen/Components/AppNameWidget.dart';
 import 'package:sale_app/Src/Pages/Values/custom_color.dart';
-import 'package:sale_app/Src/Pages/auth/SigninScreen.dart';
+import 'SigninScreen.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
